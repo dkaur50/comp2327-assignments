@@ -23,10 +23,7 @@ class Client:
 
         if type(client_number) != int:
             raise ValueError("The client number should be an integer.")
-        elif client_number.strip() == "":
-            raise ValueError("The client number cannot be blank.")
-        else:
-            self.client_number = client_number
+        self.client_number = client_number
 
         if first_name.strip() == "":
             raise ValueError("The first_name cannot be blank.")
