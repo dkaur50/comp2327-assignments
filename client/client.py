@@ -23,25 +23,25 @@ class Client:
 
         if type(client_number) != int:
             raise ValueError("The client number should be an integer.")
-        self.client_number = client_number
+        self.__client_number = client_number
 
         if first_name.strip() == "":
             raise ValueError("The first_name cannot be blank.")
-        self.first_name = first_name
+        self.__first_name = first_name
         
         if last_name.strip() == "":
             raise ValueError("The last_name cannot be blank.")
-        self.last_name = last_name
+        self.__last_name = last_name
 
         try:
             validate_email(email_address)
+            self.__email_address = email_address
         except EmailNotValidError:
             raise ValueError("The email_address is not valid.")
         
-        self.__email_address = email_address
+        self.__email_address = "email@pixell-river.com"
 
-    ## Accessor methods:
-
+    @property
     def get_client_number(self) -> int:
         """This function represents the unique number of the client.
         
@@ -51,6 +51,7 @@ class Client:
 
         return self.__client_number
     
+    @property
     def get_first_name(self) -> str:
         """This function gets the first name of the client.
 
@@ -60,6 +61,7 @@ class Client:
 
         return self.__first_name
     
+    @property
     def get_last_name(self) -> str:
         """This function is for the client's last name.
         
@@ -68,6 +70,7 @@ class Client:
         
         return self.__last_name
 
+    @property
     def get_email_address(self) -> str:
         """This function is regarding the client's email address.
         
@@ -76,5 +79,5 @@ class Client:
         
         return self.__email_address
     
-def __str__(self):
+def __str__(self) -> str:
     return f"{self.__last_name}, {self.__first_name} [{self.__client_number}] - {self.__email_address}"
