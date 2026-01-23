@@ -3,7 +3,7 @@
 __author__ = "Divjot Kaur"
 __version__ = "1.0.0"
 
-from email_validator import validate_email
+from email_validator import validate_email, EmailNotValidError
 
 class Client:
     """This is the main class"""
@@ -33,9 +33,12 @@ class Client:
             raise ValueError("The last_name cannot be blank.")
         self.last_name = last_name
 
-        if type(email_address) != str:
-            raise EmailNotValidError("The email address is not valid.")
-        self.email_address = email_address
+        try:
+            validate_email(email_address)
+        except EmailNotValidError:
+            raise ValueError("The email_address is not valid.")
+        
+        self.__email_address = email_address
 
     ## Accessor methods:
 
@@ -46,7 +49,7 @@ class Client:
             int: An integer that is the client number.
         """
 
-        return self.client_number
+        return self.__client_number
     
     def get_first_name(self) -> str:
         """This function gets the first name of the client.
@@ -55,7 +58,7 @@ class Client:
             str: A string value which is the client's first name.
         """
 
-        return self.first_name
+        return self.__first_name
     
     def get_last_name(self) -> str:
         """This function is for the client's last name.
@@ -63,7 +66,7 @@ class Client:
         Returns:
             str: A string value that is the client's last name."""
         
-        return self.last_name
+        return self.__last_name
 
     def get_email_address(self) -> str:
         """This function is regarding the client's email address.
@@ -71,10 +74,7 @@ class Client:
         Returns:
             str: A string value in the form of email address."""
         
-        return self.email_address
+        return self.__email_address
     
-    def __str__(self):
-        value = {f"{self.last_name}, {self.first_name} {self.client_number}] - {self.email_address}"}\
-        
-        return value
-    
+def __str__(self):
+    return f"{self.__last_name}, {self.__first_name} [{self.__client_number}] - {self.__email_address}"
