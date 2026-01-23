@@ -5,6 +5,7 @@ Usage:
 To execute all tests in the terminal execute the following command:
     python -m unittest tests/test_client.py
 """
+
 import unittest
 from client.client import Client
 from email_validator import EmailNotValidError
@@ -12,13 +13,13 @@ from email_validator import EmailNotValidError
 class TestClient(unittest.TestCase): 
 
     def test_init_valid_inputs(self):
-        """This function is to test the validity of the initialised inputs"""
+        """This function is to test the validity of the valid inputs"""
         
         # Arrange
-        client_number = 101
+        client_number = 1212
         first_name = "Anne"
         last_name = "Clinton"
-        email_address = "anne.clinton@gmail.com"
+        email_address = "anne.clinton@pixellriver.com"
 
         # Act
         client = Client(client_number, first_name, last_name, email_address)
@@ -30,66 +31,114 @@ class TestClient(unittest.TestCase):
         self.assertEqual(client._Client__email_address, "anne.clinton@pixellriver.com")
 
     def test_init_invalid_client_number(self):
+        """This function is to test invalid client number."""
+
+        # Arrange
+        client_number = "abc"
+
+        # Act
         with self.assertRaises(ValueError) as context:
-            Client("abc", "Anne", "Clinton", "anne.clinton@pixellriver.com")
+            Client(client_number, "Anne", "Clinton", "anne@gmail.com")
 
-        self.assertEqual(
-            str(context.exception),
-            "The client number should be an integer."
-        )
+        # Assert
+        self.assertEqual(str(context.exception),
+                        "The client_number should be an integer.")
 
-    def test_init_blank_first_name(self):
+    def test_blank_first_name(self):
+        """This function is to test blank first name."""
+
+        # Arrange
+        first_name = " "
+
+        # Act
         with self.assertRaises(ValueError) as context:
-            Client(1212, " ", "Clinton", "anne.clinton@pixellriver.com")
+            Client(101, first_name, "Clinton", "anne@gmail.com")
 
-        self.assertEqual(
-            str(context.exception),
-            "The first_name cannot be blank."
-        )
+        # Assert
+        self.assertEqual(str(context.exception),
+                         "The firstname cannot be blank.")
 
-    def test_init_blank_last_name(self):
+    def test_blank_last_name(self):
+        """This function is to test blank last name."""
+
+        # Arrange
+        last_name = " "
+
+        # Act
         with self.assertRaises(ValueError) as context:
-            Client(1212, "Anne", " ", "anne.clinton@pixellriver.com")
+            Client(101, "Anne", last_name, "anne@gmail.com")
 
-        self.assertEqual(
-            str(context.exception),
-            "The last_name cannot be blank."
-        )
+        # Assert
+        self.assertEqual(str(context.exception),
+                        "The last name cannot be blank.")
 
-    def test_init_invalid_email_address(self):
-        with self.assertRaises(ValueError) as context:
-            Client(1212, "Anne", "Clinton", "anne.clinton.gmail.com")
+    def test_invalid_email_address(self):
+        """This function is to check invalid email address."""
 
-        self.assertEqual(
-            str(context.exception),
-            "The email_address is not valid."
-        )
+        # Arrange
+        invalid_email = "anne.clinton.gmail.com"
 
-    # ---------- ACCESSOR TESTS ----------
+        # Act
+        client = Client(101, "Anne", "Clinton", invalid_email)
 
+        # Assert
+        self.assertEqual(client._Client__email_address, "email@pixellriver.com")
+        
     def test_get_client_number(self):
-        client = Client(1212, "Anne", "Clinton", "anne.clinton@pixellriver.com")
-        self.assertEqual(client.client_number, 1212)
-
-    def test_get_first_name(self):
-        client = Client(1212, "Anne", "Clinton", "anne.clinton@pixellriver.com")
-        self.assertEqual(client.first_name, "Anne")
-
-    def test_get_last_name(self):
-        """This function is to check that whether the get_email_address 
+        """This function is to check that whether the get_client_number
         function is working or not.
         """
 
+        # Arrange
+        client = Client(1212, "Anne", "Clinton", "anne@pixellriver.com")
+
+        # Act
+        actual = client.client_number
+
+        # Assert
+        self.assertEqual(actual, 1212)
+
+    def test_get_first_name(self):
+        """This function is to check that whether the get_first_name
+        function is working or not.
+        """
+        
+        # Arrange
+        client = Client(1212, "Anne", "Clinton", "anne@pixellriver.com")
+
+        # Act
+        actual = client.first_name
+
+        # Assert
+        self.assertEqual(actual, "Anne")
+
+    def test_get_last_name(self):
+        """This function is to check that whether the get_last_name
+        function is working or not.
+        """
+
+        # Arrange
         client = Client(1212, "Anne", "Clinton", "anne.clinton@pixellriver.com")
-        self.assertEqual(client.last_name, "Clinton")
+        
+        # Act
+        actual = client.last_name
+
+        # Assert
+        self.assertEqual(actual, "Clinton")
 
     def test_get_email_address(self):
         """This function is to check that whether the get_email_address 
         function is working or not.
         """
-        
+
+        # Arrange
         client = Client(1212, "Anne", "Clinton", "anne.clinton@pixellriver.com")
-        self.assertEqual(client.email_address, "anne.clinton@pixellriver.com")
+        
+        # Act
+        actual = client.email_address
+
+        # Assert
+        self.assertEqual(actual, "anne@pixellriver.com")
 
     def test__str__(self):
         """This function is to check if the final test result has 
@@ -97,13 +146,13 @@ class TestClient(unittest.TestCase):
         """
 
         # Arrange
-        client = Client(1212, "Anne", "Clinton", "anne@gmail.com")
+        client = Client(1212, "Anne", "Clinton", "anne@pixellriver.com")
 
         # Act
         actual = str(client)
 
         # Assert
-        expected = "Clinton, Anne [1212] - anne@gmail.com"
+        expected = "Clinton, Anne [1212] - anne@pixellriver.com"
         self.assertEqual(actual, expected)
 
 if __name__ == "__main__":

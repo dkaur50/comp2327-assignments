@@ -39,7 +39,7 @@ class Client:
         except EmailNotValidError:
             raise ValueError("The email_address is not valid.")
         
-        self.__email_address = "email@pixell-river.com"
+        self.__email_address = "email@pixellriver.com"
 
     @property
     def get_client_number(self) -> int:
