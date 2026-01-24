@@ -22,7 +22,7 @@ class Client:
         """
 
         if type(client_number) != int:
-            raise ValueError("The client number should be an integer.")
+            raise ValueError("The client_number should be an integer.")
         self.__client_number = client_number
 
         if first_name.strip() == "":
@@ -34,15 +34,13 @@ class Client:
         self.__last_name = last_name
 
         try:
-            validate_email(email_address)
+            validate_email(email_address, check_deliverability=False)
             self.__email_address = email_address
         except EmailNotValidError:
             raise ValueError("The email_address is not valid.")
-        
-        self.__email_address = "email@pixellriver.com"
-
+ 
     @property
-    def get_client_number(self) -> int:
+    def client_number(self) -> int:
         """This function represents the unique number of the client.
         
         Returns:
@@ -52,7 +50,7 @@ class Client:
         return self.__client_number
     
     @property
-    def get_first_name(self) -> str:
+    def first_name(self) -> str:
         """This function gets the first name of the client.
 
         Returns:
@@ -62,7 +60,7 @@ class Client:
         return self.__first_name
     
     @property
-    def get_last_name(self) -> str:
+    def last_name(self) -> str:
         """This function is for the client's last name.
         
         Returns:
@@ -71,7 +69,7 @@ class Client:
         return self.__last_name
 
     @property
-    def get_email_address(self) -> str:
+    def email_address(self) -> str:
         """This function is regarding the client's email address.
         
         Returns:

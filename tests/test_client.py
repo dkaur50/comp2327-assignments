@@ -56,7 +56,7 @@ class TestClient(unittest.TestCase):
 
         # Assert
         self.assertEqual(str(context.exception),
-                         "The firstname cannot be blank.")
+                         "The first_name cannot be blank.")
 
     def test_blank_last_name(self):
         """This function is to test blank last name."""
@@ -70,7 +70,7 @@ class TestClient(unittest.TestCase):
 
         # Assert
         self.assertEqual(str(context.exception),
-                        "The last name cannot be blank.")
+                        "The last_name cannot be blank.")
 
     def test_invalid_email_address(self):
         """This function is to check invalid email address."""
@@ -79,10 +79,11 @@ class TestClient(unittest.TestCase):
         invalid_email = "anne.clinton.gmail.com"
 
         # Act
-        client = Client(101, "Anne", "Clinton", invalid_email)
+        invalid_email = "anne.clinton.gmail.com"
 
-        # Assert
-        self.assertEqual(client._Client__email_address, "email@pixellriver.com")
+        #
+        with self.assertRaises(ValueError):
+            Client(101, "Anne", "Clinton", invalid_email)
         
     def test_get_client_number(self):
         """This function is to check that whether the get_client_number
