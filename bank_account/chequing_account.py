@@ -1,4 +1,4 @@
-"""This module file is regarding the BankAccount class."""
+"""This module conatins the Chequing account information."""
 
 __author__ = "Divjot Kaur"
 __version__ = "1.0.0"
@@ -12,8 +12,27 @@ import time
 from datetime import date 
 
 class ChequingAccount(BankAccount):
+
+    """This class represents chequing account inherited from details 
+    from BankAccount class.
+    """
+
     def __init__(self, account_number, client_number, balance, 
                  date_created, overdraft_limit, overdraft_rate):
+        
+        """Initializes the attributes of the BankAccount class.
+
+        Args:
+            account_number (int): An integer representing the bank 
+            account number.
+            client_number (int): An integer representing the client 
+            number of the account holder.
+            balance (float): A float representing the current balance 
+            of the bank account.
+            date_created (date): It represents the date.
+            overdraft_limit (float): It represents float.
+            overdraft_rate (float): It represents float.
+        """
         
         super().__init__(account_number, client_number, balance, 
                          date_created)
@@ -50,7 +69,7 @@ class ChequingAccount(BankAccount):
             return BankAccount.BASE_SERVICE_CHARGE
         else:
             return BankAccount.BASE_SERVICE_CHARGE + \
-            (self.__overdraft_limit - self.balance) * self.__overdraft_rate
+            (self.__overdraft_limit-self.balance)*self.__overdraft_rate
 
     def __str__(self):
         

@@ -24,7 +24,9 @@ class BankAccount:
             number of the account holder.
             balance (float): A float representing the current balance 
             of the bank account.
+            date_created (date): This represents the date.
         """
+        
         if type(account_number) != int:
             raise ValueError("The account_number should be an integer.")
         self.__account_number = account_number
