@@ -3,6 +3,8 @@
 __author__ = "Divjot Kaur"
 __version__ = "1.0.0"
 
+from abc import ABC, abstractmethod
+
 import time
 
 from datetime import date
@@ -64,7 +66,7 @@ class BankAccount:
         return self.__balance
     
     @property
-    def date_created(self) -> int:
+    def date_created(self) -> date:
         
         """"""
         return date.today()
