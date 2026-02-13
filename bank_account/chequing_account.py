@@ -9,8 +9,7 @@ from abc import ABC, abstractmethod
 
 import time
 
-from datetime import date
-
+from datetime import date 
 
 class ChequingAccount(BankAccount):
     def __init__(self, account_number, client_number, balance, 
@@ -20,7 +19,7 @@ class ChequingAccount(BankAccount):
                          date_created)
         
         try:
-            self.__overdraft_limit = overdraft_limit
+            self.__overdraft_limit = float(overdraft_limit)
             return ("The overdraft limit value is valid.")
         except ValueError:
             self.__overdraft_limit = -100.0
@@ -44,28 +43,18 @@ class ChequingAccount(BankAccount):
         """
         return self.__overdraft_rate
 
-    # Override withdraw to include overdraft limit
-    def withdraw(self, amount):
+    def get_service_charges(self) -> float:
+        
+        """This is a function gets the charges."""
+        if self.balance >= self.__overdraft_limit:
+            return BankAccount.BASE_SERVICE_CHARGE
+        else:
+            return BankAccount.BASE_SERVICE_CHARGE + \
+            (self.__overdraft_limit - self.balance) * self.__overdraft_rate
 
-        if not isinstance(amount, (int, float)):
-            raise ValueError("Withdraw amount must be numeric.")
-
-        amount = float(amount)
-        if amount <= 0:
-            raise ValueError("Withdraw amount must be positive.")
-
-        # Check against overdraft limit
-        if amount > (self.balance - self.__overdraft_limit):
-            raise ValueError(
-                f"Withdraw amount ${amount:,.2f} exceeds overdraft limit. "
-                f"Max available: ${self.balance - self.__overdraft_limit:,.2f}"
-            )
-
-        # Perform withdrawal
-        self.update_balance(-amount)
-
-    # Override __str__ to include overdraft info
     def __str__(self):
+        
+        """This function represents a string representation."""
         account_number_and_balance = super().__str__().strip()
         account_information = (
             f"Overdraft Limit: ${self.__overdraft_limit:,.2f} "
