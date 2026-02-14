@@ -123,8 +123,7 @@ class TestChequingAccount(unittest.TestCase):
         actual = str(account)
 
         # Assert
-        self.assertIn("Account Type: Chequing", actual)
-
-
+        self.assertIn("Account Type: Chequing", actual) 
+ 
 if __name__ == "__main__":
     unittest.main()

@@ -1,85 +1,144 @@
+"""Unit testing for the InvestmentAccount class.
+
+Usage: 
+
+To execute all tests in the terminal execute the following command:
+    python -m unittest tests/test_investment_account.py
+"""
+
+__author__ = "Divjot Kaur"
+__version__ = "1.0.0"
+
 import unittest
-from datetime import date, timedelta
+
+from datetime import date
+
 from bank_account.investment_account import InvestmentAccount
+
 from bank_account.bank_account import BankAccount
-
-
+ 
 class TestInvestmentAccount(unittest.TestCase):
+    
+    """This class represents InvestmentAccount inherited from 
+    BankAccount class.
+    """
 
     def setUp(self):
-        """Set up reusable dates"""
-        self.recent_date = date.today()
-        self.old_date = date.today() - timedelta(days=11 * 365)
+        
+        """This function is for setting up common dates for tests."""
 
-    # -------------------------------------------------
-    # __init__ Tests
-    # -------------------------------------------------
+        self.today = date.today()
+        self.old_date = self.today.replace(year = self.today.year - 11)
+        self.recent_date = self.today.replace(year = self.today.year - 5)
 
-    def test_management_fee_valid_float(self):
-        account = InvestmentAccount(1001, 2001, 1000.00,
-                                    self.recent_date, 1.99)
+    def test_init_valid_fee(self):
+        
+        """This function tests initialization with valid management fee.
+        """
 
-        self.assertEqual(1.99,
-                         account._InvestmentAccount__management_fee)
+        # Act
+        account = InvestmentAccount(1001, 5001, 1000.0, 
+                                    self.recent_date, 5.0)
 
-    def test_management_fee_convertible_string(self):
-        account = InvestmentAccount(1002, 2002, 1000.00,
-                                    self.recent_date, "3.25")
+        # Assert
+        self.assertEqual(account._InvestmentAccount__management_fee, 
+                         5.0)
+        self.assertEqual(account.account_number, 1001)
+        self.assertEqual(account.client_number, 5001)
+        self.assertEqual(account.balance, 1000.0)
 
-        self.assertEqual(3.25,
-                         account._InvestmentAccount__management_fee)
+    def test_init_invalid_fee(self):
+        
+        """This function tests initialization with invalid management 
+        fee."""
 
-    def test_management_fee_invalid_value_defaults(self):
-        account = InvestmentAccount(1003, 2003, 1000.00,
+        # Act
+        account = InvestmentAccount(1002, 5002, 2000.0, 
                                     self.recent_date, "invalid")
 
-        self.assertEqual(2.55,
-                         account._InvestmentAccount__management_fee)
+        # Assert
+        self.assertEqual(account._InvestmentAccount__management_fee, 
+                         2.55)
 
-    # -------------------------------------------------
-    # get_service_charges Tests
-    # -------------------------------------------------
+    def test_is_older_than_10_years_true(self):
+        
+        """This function tests if account older than 10 years returns 
+        True."""
 
-    def test_service_charge_recent_account(self):
-        account = InvestmentAccount(1004, 2004, 1000.00,
-                                    self.recent_date, 2.00)
+        # Act
+        account = InvestmentAccount(1003, 5003, 3000.0, self.old_date, 
+                                    4.0)
 
-        expected = BankAccount.BASE_SERVICE_CHARGE + 2.00
-        actual = account.get_service_charges()
+        # Assert
+        self.assertEqual(
+            account._InvestmentAccount__is_older_than_10_years(), True)
 
-        self.assertEqual(expected, round(actual, 2))
+    def test_is_older_than_10_years_false(self):
+        
+        """This function tests if account newer than 10 years returns 
+        False."""
 
-    def test_service_charge_old_account_fee_waived(self):
-        account = InvestmentAccount(1005, 2005, 1000.00,
-                                    self.old_date, 2.00)
+        # Act
+        account = InvestmentAccount(
+            1004, 5004, 4000.0, self.recent_date, 4.0)
 
-        expected = BankAccount.BASE_SERVICE_CHARGE
-        actual = account.get_service_charges()
+        # Assert
+        self.assertEqual(
+            account._InvestmentAccount__is_older_than_10_years(), False)
 
-        self.assertEqual(expected, round(actual, 2))
+    def test_service_charges_older_account(self):
+        
+        """This function tests service charges for account older than 
+        10 years."""
 
-    # -------------------------------------------------
-    # __str__ Tests
-    # -------------------------------------------------
+        # Act
+        account = InvestmentAccount(1005, 5005, 5000.0, self.old_date, 
+                                    6.0)
 
-    def test_str_recent_account_shows_fee(self):
-        account = InvestmentAccount(1006, 2006, 1000.00,
-                                    self.recent_date, 2.00)
+        # Assert
+        self.assertEqual(account.get_service_charges(), 
+                         BankAccount.BASE_SERVICE_CHARGE)
 
-        result = str(account)
+    def test_service_charges_new_account(self):
+        
+        """This function tests service charges for account newer than 
+        10 years."""
 
-        self.assertIn("Management Fee: $2.00", result)
-        self.assertIn("Account Type: Investment", result)
+        # Act
+        account = InvestmentAccount(1006, 5006, 6000.0, 
+                                    self.recent_date, 6.0)
+        expected_charge = BankAccount.BASE_SERVICE_CHARGE + 6.0
 
-    def test_str_old_account_shows_waived(self):
-        account = InvestmentAccount(1007, 2007, 1000.00,
-                                    self.old_date, 2.00)
+        # Assert
+        self.assertEqual(account.get_service_charges(), expected_charge)
 
-        result = str(account)
+    def test_str_older_account(self):
+        
+        """This function tests string representation for older accounts.
+        """
 
-        self.assertIn("Management Fee: Waived", result)
-        self.assertIn("Account Type: Investment", result)
+        # Act
+        account = InvestmentAccount(1007, 5007, 7000.0, self.old_date, \
+                                    7.0)
+        account_str = str(account)
 
+        # Assert
+        self.assertIn("Waived", account_str)
+        self.assertIn("Account Type: Investment", account_str)
 
-if __name__ == '__main__':
+    def test_str_new_account(self):
+        
+        """This function tests string representation for newer accounts.
+        """
+
+        # Act
+        account = InvestmentAccount(1008, 5008, 8000.0, 
+                                    self.recent_date, 7.0)
+        account_str = str(account)
+
+        # Assert
+        self.assertIn("$7.00", account_str)
+        self.assertIn("Account Type: Investment", account_str)
+
+if __name__ == "__main__":
     unittest.main()
