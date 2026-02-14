@@ -38,8 +38,7 @@ class ChequingAccount(BankAccount):
                          date_created)
         
         try:
-            self.__overdraft_limit = float(overdraft_limit)
-            return ("The overdraft limit value is valid.")
+            self.__overdraft_limit = float(overdraft_limit) 
         except ValueError:
             self.__overdraft_limit = -100.0
         try:

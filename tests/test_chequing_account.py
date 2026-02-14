@@ -33,15 +33,16 @@ class TestChequingAccount(unittest.TestCase):
         balance = 500.00
         date_created = date.today()
         overdraft_limit = 100.00
+        overdraft_rate = 0.05
 
         # Act
         account = ChequingAccount(account_number, client_number,
                                    balance, date_created,
-                                   overdraft_limit)
+                                   overdraft_limit, overdraft_rate)
 
         # Assert
         self.assertEqual(account._ChequingAccount__overdraft_limit,
-                         100.00)
+                         100.00, 0.05)
 
     def test_init_invalid_overdraft_limit(self):
         
@@ -49,11 +50,11 @@ class TestChequingAccount(unittest.TestCase):
 
         # Act
         account = ChequingAccount(1002, 2002, 500.00, date.today(),
-                                  "invalid")
+                                  "invalid", 0.05)
 
         # Assert
         self.assertEqual(account._ChequingAccount__overdraft_limit,
-                         0.0)
+                         0.0, 0.05)
 
     def test_withdraw_within_balance(self):
         
@@ -61,7 +62,7 @@ class TestChequingAccount(unittest.TestCase):
 
         # Arrange
         account = ChequingAccount(1003, 2003, 500.00, date.today(), 
-                                  100.00)
+                                  100.00, 0.05)
 
         # Act
         account.withdraw(200.00)
@@ -75,7 +76,7 @@ class TestChequingAccount(unittest.TestCase):
 
         # Arrange
         account = ChequingAccount(1004, 2004, 100.00, date.today(),
-                                  200.00)
+                                  200.00, 0.05)
 
         # Act
         account.withdraw(250.00)
@@ -88,8 +89,8 @@ class TestChequingAccount(unittest.TestCase):
         """This function tests withdraw exceeding overdraft."""
 
         # Arrange
-        account = ChequingAccount(1005, 2005, 100.00,
-                                   date.today(), 50.00)
+        account = ChequingAccount(1005, 2005, 100.00, date.today(), 
+                                  50.00, 0.05)
 
         # Act / Assert
         with self.assertRaises(ValueError):
@@ -100,8 +101,8 @@ class TestChequingAccount(unittest.TestCase):
         """This function tests service charge calculation."""
 
         # Arrange
-        account = ChequingAccount(1006, 2006, 500.00,
-                                   date.today(), 100.00)
+        account = ChequingAccount(1006, 2006, 500.00, date.today(), 
+                                  100.00, 0.05)
 
         # Act
         actual = account.get_service_charges()
@@ -117,7 +118,7 @@ class TestChequingAccount(unittest.TestCase):
 
         # Arrange
         account = ChequingAccount(1007, 2007, 500.00, date.today(),
-                                  100.00)
+                                  100.00, 0.05)
 
         # Act
         actual = str(account)

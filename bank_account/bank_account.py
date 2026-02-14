@@ -41,7 +41,7 @@ class BankAccount:
             self.__balance = 0.0
         
         if isinstance(date_created, date):
-            self.date_created = date_created
+            self.__date_created = date_created
 
     BASE_SERVICE_CHARGE = 0.50    
 
@@ -71,7 +71,7 @@ class BankAccount:
     def date_created(self) -> date:
         
         """"""
-        return date.today()
+        return self.__date_created
 
     def update_balance(self, amount: float) -> None:
         

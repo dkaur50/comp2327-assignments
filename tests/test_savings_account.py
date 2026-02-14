@@ -22,13 +22,16 @@ class TestSavingsAccount(unittest.TestCase):
     """This class represents SavingsAccount inherited from the
     BankAccount class.
     """
+    
+    def setUp(self):
+        
+        """This function would set up a common date for all tests."""
+        
+        self.today = date.today()
 
     def test_init_valid_minimum_balance(self):
         
-        """This function tests whether the minimum balance is valid."""
-
-        # Arrange
-        self.today = date.today()
+        """This function tests whether the minimum balance is valid.""" 
 
         # Act
         account = SavingsAccount(2001, 6001, 1000.0, self.today, 500.0)
