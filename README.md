@@ -14,4 +14,4 @@ Assignment 2: Object Oriented Design includes the use of Abstraction, Inheritanc
 
 ## Polymorphism
 
-Polymorphism was acheived in the BankAccount class when the get_service_charges(self) function was being used. In every subclass of BankAccount class whether it was ChequingAccount, SavingsAccount or InvestmentAccount, each time the way in which the function was working varied. 
+Polymorphism was acheived in the BankAccount class when the get_service_charges(self) function was being used. In every subclass of BankAccount class whether it was ChequingAccount, SavingsAccount or InvestmentAccount, each time the way in which the function was working varied.
