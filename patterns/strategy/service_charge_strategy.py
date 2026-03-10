@@ -13,3 +13,4 @@ class ServiceChargeStrategy(ABC):
     def calculate_service_charges(self, account: BankAccount,
                                   BASE_SERVICE_CHARGE: float= 0.50):
 
+        pass
