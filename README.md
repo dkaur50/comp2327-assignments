@@ -12,7 +12,7 @@ Assignment 01: [Indicate the name and description of the current assignment]
 
 Assignment 2: Object Oriented Design includes the use of Abstraction, Inheritance and Polymorphism concepts on the BankAccount class which is the superclass from where more subclasses are defined. This assignemnt also contains unit testing that though limits to verify the expected polymorphic behavior.
 
-Assignment 03: [Indicate the name and description of the current assignment]
+Assignment 03: The name of the current assignment is Design Patterns.
 
 ## Polymorphism
 
