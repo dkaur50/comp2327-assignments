@@ -17,3 +17,7 @@ Assignment 03: The name of the current assignment is Design Patterns.
 ## Polymorphism
 
 Polymorphism was acheived in the BankAccount class when the get_service_charges(self) function was being used. In every subclass of BankAccount class whether it was ChequingAccount, SavingsAccount or InvestmentAccount, each time the way in which the function was working varied.
+
+## Strategy Pattern
+
+[Explain how the Strategy Pattern is being used in this application.]
