@@ -4,12 +4,12 @@ __author__ = "Divjot Kaur"
 __version__ = "1.0.0"
 
 from bank_account import BankAccount
-
-from abc import ABC, abstractmethod
-
+ 
 import time
 
-from datetime import date 
+from datetime import date
+
+from patterns.strategy.overdraft_strategy import OverdraftStrategy
 
 class ChequingAccount(BankAccount):
 
@@ -20,9 +20,10 @@ class ChequingAccount(BankAccount):
     def __init__(self, account_number, client_number, balance, 
                  date_created, overdraft_limit, overdraft_rate):
         
-        """Initializes the attributes of the BankAccount class.
+        """This class if for initializing the attributes of the 
+        BankAccount class.
 
-        Args:
+        Retur:
             account_number (int): An integer representing the bank 
             account number.
             client_number (int): An integer representing the client 
@@ -46,6 +47,12 @@ class ChequingAccount(BankAccount):
         except ValueError:
             self.__overdraft_rate = 0.05
 
+        overdraft_limit=self.__overdraft_limit,
+        overdraft_rate=self.__overdraft_rate
+        self.__service_charge_strategy = OverdraftStrategy(
+                                overdraft_limit=self.__overdraft_limit,
+                                overdraft_rate=self.__overdraft_rate)
+
     @property
     def overdraft_limit(self):
 
@@ -64,19 +71,18 @@ class ChequingAccount(BankAccount):
     def get_service_charges(self) -> float:
         
         """This is a function gets the charges."""
-        if self.balance >= self.__overdraft_limit:
-            return BankAccount.BASE_SERVICE_CHARGE
-        else:
-            return BankAccount.BASE_SERVICE_CHARGE + \
-            (self.__overdraft_limit-self.balance)*self.__overdraft_rate
+        return self.__service_charge_strategy.calculate_service_charges(self.balance)
 
     def __str__(self):
         
         """This function represents a string representation."""
+        
         account_number_and_balance = super().__str__().strip()
+        
         account_information = (
             f"Overdraft Limit: ${self.__overdraft_limit:,.2f} "
             f"Overdraft Rate: {self.__overdraft_rate*100:.2f}% "
             f"Account Type: Chequing")
+        
         return f"{account_number_and_balance}\n{account_information}"
     

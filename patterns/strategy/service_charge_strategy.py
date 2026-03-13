@@ -10,6 +10,8 @@ from bank_account.bank_account import BankAccount
 class ServiceChargeStrategy(ABC):
     """This class has been created to the service charge strategy."""
 
+    BASE_SERVICE_CHARGE = 0.50
+
     def calculate_service_charges(self, account: BankAccount,
                                   BASE_SERVICE_CHARGE: float= 0.50):
 

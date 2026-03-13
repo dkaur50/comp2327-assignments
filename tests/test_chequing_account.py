@@ -17,6 +17,8 @@ from bank_account.chequing_account import ChequingAccount
 
 from bank_account.bank_account import BankAccount
 
+from patterns.strategy.service_charge_strategy import ServiceChargeStrategy
+
 class TestChequingAccount(unittest.TestCase):
     
     """This class represents chequing account inherited from details 
@@ -108,7 +110,7 @@ class TestChequingAccount(unittest.TestCase):
         actual = account.get_service_charges()
 
         # Assert
-        expected = BankAccount.BASE_SERVICE_CHARGE
+        expected = ServiceChargeStrategy.BASE_SERVICE_CHARGE
         self.assertEqual(expected, round(actual, 2))
 
     def test__str__(self):

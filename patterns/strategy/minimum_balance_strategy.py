@@ -3,40 +3,24 @@
 __author__ = "Divjot Kaur"
 __version__ = "1.0.0"
 
-from strategy.service_charge_strategy import ServiceChargeStrategy
+from patterns.strategy.service_charge_strategy import ServiceChargeStrategy
  
 class MinimumBalanceStrategy(ServiceChargeStrategy):
-    """
-    Strategy used to calculate service charges for Savings accounts.
-    """
+    """ This class is for the MinimumBalancesStrategy."""
 
     SERVICE_CHARGE_PREMIUM = 2.00
 
     def __init__(self, minimum_balance):
-        """
-        Initializes the MinimumBalanceStrategy object.
-
-        Parameters
-        ----------
-        minimum_balance : float
-            The minimum required balance.
-        """
+        """ This class if for initializing the attributes of 
+        MinimumBalanceStrategy."""
 
         self._minimum_balance = minimum_balance
 
     def calculate_service_charges(self, balance):
-        """
-        Calculates service charges based on minimum balance rules.
+        """This class calculates service charges.
 
-        Parameters
-        ----------
-        balance : float
-            The current account balance.
-
-        Returns
-        -------
-        float
-            The calculated service charge.
+        Returns:
+            balance: The calculated service charge.
         """
 
         if balance >= self._minimum_balance:

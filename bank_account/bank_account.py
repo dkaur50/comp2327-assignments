@@ -44,9 +44,7 @@ class BankAccount:
             self.__balance = 0.0
         
         if isinstance(date_created, date):
-            self.__date_created = date_created
-
-    BASE_SERVICE_CHARGE = 0.50    
+            self.__date_created = date_created 
 
     @property
     def account_number(self) -> int:

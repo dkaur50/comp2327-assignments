@@ -7,17 +7,19 @@ from bank_account import BankAccount
 
 from datetime import date
 
+from patterns.strategy.management_fee_strategy import ManagementFeeStrategy
+
 class InvestmentAccount(BankAccount):
-    """
-    This represents Investment Account that inherits from BankAccount.
+    """ This represents Investment Account that inherits from BankAccount.
     """ 
 
     def __init__(self, account_number, client_number, balance,
                  date_created, management_fee):
         
-        """Initializes the attributes of the BankAccount class.
+        """This class initializes the attributes of the BankAccount 
+        class.
 
-        Args:
+        Returns:
             account_number (int): An integer representing the bank 
             account number.
             client_number (int): An integer representing the client 
@@ -31,52 +33,33 @@ class InvestmentAccount(BankAccount):
 
         super().__init__(account_number, client_number, balance, 
                          date_created)
- 
+
         try:
             self.__management_fee = float(management_fee)
         except ValueError:
             self.__management_fee = 2.55
 
-    def __is_older_than_10_years(self) -> bool:
-        
-        """
-        This function determines if the account is more than 10 years 
-        old."""
-
-        today = date.today()
-        year_difference = today.year - self.date_created.year
-
-        if year_difference > 10:
-            return True
-
-        if year_difference == 10:
-            if (today.month, today.day) > (
-                    self.date_created.month, self.date_created.day):
-                return True
-
-        return False
+        self.__service_charge_strategy = ManagementFeeStrategy(
+                                balance=balance,
+                                date_created=date_created,
+                                management_fee=self.__management_fee)
 
     def get_service_charges(self) -> float:
+        """This class is to get the service charges using the 
+        ManagementFeeStrategy."""
         
-        """
-        This function returns the calculated service charges.
-        """
-
-        if self.__is_older_than_10_years():
-            return BankAccount.BASE_SERVICE_CHARGE
-        else:
-            return (BankAccount.BASE_SERVICE_CHARGE +
-                    self.__management_fee)
+        return self.__service_charge_strategy.calculate_service_charges()
+ 
+    def __is_older_than_10_years(self) -> bool:
+        """Return True if the account is older than 10 years."""
+        return self.date_created <= date.today() - timedelta(days=10*365.25)
 
     def __str__(self) -> str:
-        
-        """
-        This function returns formatted string representation.
-        """
+        """This function returns a string representation."""
 
         investment_information = super().__str__().strip()
  
-        if self.__is_older_than_10_years():
+        if self.__service_charge_strategy.calculate_service_charges() == 0:
             fee_display = "Waived"
         else:
             fee_display = f"${self.__management_fee:,.2f}"

@@ -5,7 +5,7 @@ __version__ = "1.0.0"
 
 from bank_account.bank_account import BankAccount
 
-from service_charge_strategy import ServiceChargeStrategy
+from patterns.strategy.service_charge_strategy import ServiceChargeStrategy
 
 from patterns.strategy.service_charge_strategy import ServiceChargeStrategy
 
