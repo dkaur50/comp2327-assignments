@@ -8,9 +8,13 @@ __credits__ = ""
 #     Import date from datetime
 
 from datetime import date
+
 from bank_account.bank_account import BankAccount
+
 from bank_account.chequing_account import ChequingAccount
+
 from bank_account.investment_account import InvestmentAccount
+
 from bank_account.savings_account import SavingsAccount
 
 # 2. Create an instance of a ChequingAccount with values of your 
