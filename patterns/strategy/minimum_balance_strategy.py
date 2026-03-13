@@ -27,4 +27,4 @@ class MinimumBalanceStrategy(ServiceChargeStrategy):
             return ServiceChargeStrategy.BASE_SERVICE_CHARGE
 
         return ServiceChargeStrategy.BASE_SERVICE_CHARGE + MinimumBalanceStrategy.SERVICE_CHARGE_PREMIUM
-    
+     

@@ -3,16 +3,14 @@
 __author__ = "Divjot Kaur"
 __version__ = "1.0.0"
 
-from abc import ABC, abstractmethod
-
-import time
+from abc import ABC, abstractmethod 
 
 from datetime import date
 
-class BankAccount:
-    """This class represents a bank account with account number, 
-    client number, and balance.
-    """
+from patterns.observer.subject import Subject
+
+class BankAccount(Subject, ABC):
+    """This class represents client bank account."""
 
     def __init__(self, account_number, 
                  client_number, 
@@ -30,6 +28,8 @@ class BankAccount:
             date_created (date): This represents the date.
         """
         
+        super().__init__()
+
         if type(account_number) != int:
             raise ValueError("The account_number should be an integer.")
         self.__account_number = account_number
@@ -45,6 +45,10 @@ class BankAccount:
         
         if isinstance(date_created, date):
             self.__date_created = date_created 
+
+    LOW_BALANCE_LEVEL = 50.0
+    LARGE_TRANSACTION_THRESHOLD = 10000.0
+    BASE_SERVICE_CHARGE = 5.0
 
     @property
     def account_number(self) -> int:
@@ -74,6 +78,17 @@ class BankAccount:
         """"""
         return self.__date_created
 
+    def attach(self, observer):
+        self._observers.append(observer)
+
+    def detach(self, observer):
+        if observer in self._observers:
+            self._observers.remove(observer)
+
+    def notify(self, message):
+        for observer in self._observers:
+            observer.update(message)
+
     def update_balance(self, amount: float) -> None:
         
         """This function adds the given amount to the account balance 
@@ -84,9 +99,15 @@ class BankAccount:
         """
         if type(amount) == float:
             self.__balance += float(amount)
-        else: 
+        else:
             raise ValueError
-        
+
+        if self.__balance < BankAccount.LOW_BALANCE_LEVEL:
+            self.notify(f"Low balance warning ${self.__balance:,.2f}: on account {self.__account_number}.")
+
+        if abs(amount) > BankAccount.LARGE_TRANSACTION_THRESHOLD:
+            self.notify(f"Large transaction ${amount:,.2f}: on account {self.__account_number}.")
+    
     def deposit(self, amount: float) -> None:
 
         """This function deposits a positive numeric amount to the 
