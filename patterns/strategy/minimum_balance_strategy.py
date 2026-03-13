@@ -1,12 +1,10 @@
-"""
-Minimum Balance Strategy module.
+"""This module is for the MinimumBalanceStrategy class"""
 
-Implements service charge calculations for Savings accounts.
-"""
+__author__ = "Divjot Kaur"
+__version__ = "1.0.0"
 
-from patterns.strategy.service_charge_strategy import ServiceChargeStrategy
-
-
+from strategy.service_charge_strategy import ServiceChargeStrategy
+ 
 class MinimumBalanceStrategy(ServiceChargeStrategy):
     """
     Strategy used to calculate service charges for Savings accounts.
@@ -45,5 +43,4 @@ class MinimumBalanceStrategy(ServiceChargeStrategy):
             return ServiceChargeStrategy.BASE_SERVICE_CHARGE
 
         return ServiceChargeStrategy.BASE_SERVICE_CHARGE + MinimumBalanceStrategy.SERVICE_CHARGE_PREMIUM
-    
     
