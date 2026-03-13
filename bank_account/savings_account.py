@@ -39,10 +39,14 @@ class SavingsAccount(BankAccount):
 
         self.__service_charge_strategy = MinimumBalanceStrategy(
                                                 self.__minimum_balance)
+    # Declaring a constant.
+    SERVICE_CHARGE_PREMIUM = 2.5
 
     def get_service_charges(self) -> float:
         """This function returns the calculated service charges."""
-        return self.__service_charge_strategy.calculate_service_charges()
+        
+        return self.__service_charge_strategy.calculate_service_charges(
+                                                        self.balance)
     
     def __str__(self) -> str: 
         """This represents formatted string representation."""

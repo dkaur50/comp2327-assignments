@@ -1,4 +1,6 @@
-
+"""This module contains the Subject class that is responsible for 
+maintaining a list of its observers and notifying them of state changes 
+or events."""
 
 from abc import ABC, abstractmethod
 
@@ -9,7 +11,10 @@ class Subject(ABC):
     observers and notifying them of state changes or events."""
 
     def __init__(self):
-        """This function is for initialization."""
+        """This function is for initialization of the attributes."""
+        
+        # Creating an empty list for now, so that the observers list 
+        # can be stored.
         self._observers = []
 
     def attach(self, observer: Observer):
@@ -18,6 +23,7 @@ class Subject(ABC):
         Returns:
             observer (Observer): The observer to be added.
         """
+        
         if observer not in self._observers:
             self._observers.append(observer)
 
@@ -36,6 +42,7 @@ class Subject(ABC):
         """This function is to notify all observers about any change.
         
         Returnd:
-            message (str): The message to notifty the observers.
+            message (str): The message to notify the observers.
         """
+        
         pass

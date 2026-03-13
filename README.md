@@ -20,4 +20,8 @@ Polymorphism was acheived in the BankAccount class when the get_service_charges(
 
 ## Strategy Pattern
 
-[Explain how the Strategy Pattern is being used in this application.]
+The Strategy pattern has been used to define the attributes of the ServiceChargeStrategy class that contains various other components linked together. 
+
+## Observer Pattern
+
+The Observer pattern has been used to create a list of all the observers and perform attach, detach and notify features on the account types and alert them with ALERT messages if needed while storing all the data in a .txt file.

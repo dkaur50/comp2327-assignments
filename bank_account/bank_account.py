@@ -47,7 +47,9 @@ class BankAccount(Subject, ABC):
             self.__date_created = date_created 
 
     LOW_BALANCE_LEVEL = 50.0
+    
     LARGE_TRANSACTION_THRESHOLD = 10000.0
+    
     BASE_SERVICE_CHARGE = 5.0
 
     @property
@@ -114,10 +116,7 @@ class BankAccount(Subject, ABC):
         account balance.
 
         Args:
-            amount (float): The amount to deposit.
-
-        Raises:
-            ValueError: If the amount is not numeric or not positive.
+            amount (float): The amount to deposit. 
         """
         if type(amount) != float:
             raise ValueError(f"Deposit amount: {amount} must be numeric.")
@@ -133,11 +132,7 @@ class BankAccount(Subject, ABC):
         account if sufficient balance exists.
 
         Args:
-            amount (float): The amount to withdraw.
-
-        Raises:
-            ValueError: If the amount is not numeric, not positive, or 
-            exceeds balance.
+            amount (float): The amount to withdraw. 
         """
         if type(amount) != float:
             raise ValueError(

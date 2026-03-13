@@ -1,4 +1,4 @@
-"""This module conatins the Investment account information."""
+"""This module contains the Investment account information."""
 
 __author__ = "Divjot Kaur"
 __version__ = "1.0.0"
@@ -6,6 +6,8 @@ __version__ = "1.0.0"
 from bank_account import BankAccount
 
 from datetime import date
+
+from datetime import date, timedelta
 
 from patterns.strategy.management_fee_strategy import ManagementFeeStrategy
 
@@ -47,8 +49,11 @@ class InvestmentAccount(BankAccount):
         """This class is to get the service charges using the 
         ManagementFeeStrategy."""
         
-        return self.__service_charge_strategy.calculate_service_charges()
- 
+        if self.__is_older_than_10_years():
+            return BankAccount.BASE_SERVICE_CHARGE
+        else:
+            return BankAccount.BASE_SERVICE_CHARGE + self.__management_fee
+        
     def __is_older_than_10_years(self) -> bool:
         """Return True if the account is older than 10 years."""
         return self.date_created <= date.today() - timedelta(days=10*365.25)
@@ -58,10 +63,7 @@ class InvestmentAccount(BankAccount):
 
         investment_information = super().__str__().strip()
  
-        if self.__service_charge_strategy.calculate_service_charges() == 0:
-            fee_display = "Waived"
-        else:
-            fee_display = f"${self.__management_fee:,.2f}"
+        fee_display = "Waived" if self.__is_older_than_10_years() else f"${self.__management_fee:,.2f}"
 
         return (f"{investment_information}\n"
             f"Date Created: {self.date_created} "
