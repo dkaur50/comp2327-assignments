@@ -50,8 +50,8 @@ class ChequingAccount(BankAccount):
         overdraft_limit=self.__overdraft_limit,
         overdraft_rate=self.__overdraft_rate
         self.__service_charge_strategy = OverdraftStrategy(
-                                overdraft_limit=self.__overdraft_limit,
-                                overdraft_rate=self.__overdraft_rate)
+                                                self.__overdraft_limit,
+                                                self.__overdraft_rate)
 
     @property
     def overdraft_limit(self):

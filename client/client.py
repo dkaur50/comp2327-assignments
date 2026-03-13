@@ -7,7 +7,7 @@ from email_validator import validate_email, EmailNotValidError
 
 from patterns.observer.observer import Observer
 
-from Utility.file_utils import simulate_send_email
+from utility.file_utils import simulate_send_email
 
 from datetime import datetime
 

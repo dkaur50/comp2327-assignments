@@ -38,8 +38,7 @@ class SavingsAccount(BankAccount):
             self.__minimum_balance = 50.0 
 
         self.__service_charge_strategy = MinimumBalanceStrategy(
-                                balance=balance,
-                                minimum_balance=self.__minimum_balance)
+                                                self.__minimum_balance)
 
     def get_service_charges(self) -> float:
         """This function returns the calculated service charges."""

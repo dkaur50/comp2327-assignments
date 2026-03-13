@@ -10,8 +10,8 @@ from datetime import date
 from patterns.strategy.management_fee_strategy import ManagementFeeStrategy
 
 class InvestmentAccount(BankAccount):
-    """ This represents Investment Account that inherits from BankAccount.
-    """ 
+    """ This represents Investment Account that inherits from 
+    BankAccount.""" 
 
     def __init__(self, account_number, client_number, balance,
                  date_created, management_fee):
@@ -39,10 +39,9 @@ class InvestmentAccount(BankAccount):
         except ValueError:
             self.__management_fee = 2.55
 
-        self.__service_charge_strategy = ManagementFeeStrategy(
-                                balance=balance,
-                                date_created=date_created,
-                                management_fee=self.__management_fee)
+        self.__service_charge_strategy = ManagementFeeStrategy(balance,
+                                                        date_created,
+                                                self.__management_fee)
 
     def get_service_charges(self) -> float:
         """This class is to get the service charges using the 
