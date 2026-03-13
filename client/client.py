@@ -5,7 +5,13 @@ __version__ = "1.0.0"
 
 from email_validator import validate_email, EmailNotValidError
 
-class Client:
+from patterns.observer.observer import Observer
+
+from Utility.file_utils import simulate_send_email
+
+from datetime import datetime
+
+class Client(Observer):
     """This is the main class"""
     def __init__(self, client_number, first_name, 
                  last_name, email_address) -> None:
@@ -76,6 +82,14 @@ class Client:
             str: A string value in the form of email address."""
         
         return self.__email_address
-    
-def __str__(self) -> str:
-    return f"{self.__last_name}, {self.__first_name} [{self.__client_number}] - {self.__email_address}"
+    def update(self, message: str):
+        """Called when a subscribed BankAccount notifies the client."""
+        
+        subject = f"ALERT: Unusual Activity: {datetime.now()}"
+        
+        message = f"Notification for {self.client_number}: {self.first_name} {self.last_name}: {message}"
+        
+        simulate_send_email(self.email_address, subject, message)
+
+    def __str__(self):
+        return f"{self.last_name}, {self.first_name} [{self.client_number}] - {self.email_address}"    
