@@ -135,7 +135,7 @@ def load_data() -> tuple[dict,dict]:
     return client_listing, accounts
 
 def update_data(updated_account: BankAccount) -> None:
-    """A function to update the accounts.csv file with balance 
+    """A function to update the accounts.csv file with balance  
     data provided in the BankAccount argument.
 
     Args:
