@@ -7,6 +7,12 @@ import sys
 import csv
 from datetime import datetime
 import logging
+from bank_account.bank_account import BankAccount
+from client.client import Client
+from bank_account.chequing_account import ChequingAccount
+from bank_account.savings_account import SavingsAccount
+from bank_account.investment_account import InvestmentAccount
+
 
 # THIS LINE IS NEEDED SO THAT THE GIVEN TESTING 
 # CODE CAN RUN FROM THIS DIRECTORY.
@@ -59,12 +65,63 @@ def load_data() -> tuple[dict,dict]:
 
     # READ CLIENT DATA 
     with open(clients_csv_path, newline='') as file:
-        reader = csv.DictReader(file)        
+        reader = csv.DictReader(file)
+
+        try:
+            client_number = int(["client_number"])
+            first_name = ["first_name"]
+            last_name = ["last_name"]
+            email_address = ["email_address"]
+
+            client = Client(client_number, first_name, last_name, 
+                            email_address)
+
+        except Exception as error:
+            ("Unable to find client account.")
 
     # READ ACCOUNT DATA
     with open(accounts_csv_path, newline='') as file:
         reader = csv.DictReader(file)  
 
+        try:
+            account_number = int(["account_number"])
+            client_number = int(["client_number"])
+            balance = float(["balance"])
+            account_type = ["account_type"]
+            date_created = int["date_createdr"]
+
+            if account_type == ChequingAccount:
+                overdraft_limit = float(["overdraft_limit"])
+                overdraft_rate = float(["overdraft_rate"])
+
+                account = ChequingAccount(account_number, 
+                                          client_number, 
+                                          balance, 
+                                          date_created, 
+                                          overdraft_limit, 
+                                          overdraft_rate)
+            
+            elif account_type == SavingsAccount:
+                minimum_balance = float(["minimum_balance"])
+                
+                account = SavingsAccount(account_number, 
+                                          client_number, 
+                                          balance, 
+                                          date_created, 
+                                          minimum_balance)
+                
+            elif account_type == InvestmentAccount:
+                management_fee = float(["management_fee"])
+
+                account = ChequingAccount(account_number, 
+                                            client_number, 
+                                            balance, 
+                                            date_created, 
+                                            management_fee)
+
+            else:
+                raise ValueError("Not a valid account type.")
+            
     # RETURN STATEMENT
 
 def update_data(updated_account: BankAccount) -> None:
