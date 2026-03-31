@@ -122,6 +122,16 @@ def load_data() -> tuple[dict,dict]:
             else:
                 raise ValueError("Not a valid account type.")
             
+            if client_number in client_listing:
+                accounts[account_number] = account
+            else:
+                logging.error(f"Bank Account: {account_number} contains\
+                               invalid Client Number: {client_number}")
+            
+        except Exception as error:
+            logging.error("Unable to create Bank account: could not " \
+                            "convert string to float: 'ten'")
+
     # RETURN STATEMENT
 
 def update_data(updated_account: BankAccount) -> None:
