@@ -17,4 +17,13 @@ __credits__ = "<your name here>"
 class ClientLookupWindow(LookupWindow):
     """Represents a main window for looking up BankAccounts.""" 
 
-    pass        
+    def __init__(self):
+        """This function is to perform all super class initializations.
+        """    
+
+        super().__init__()
+
+        self.load_data()
+
+        self.client_listing = self.data["client"]
+        self.accounts = self.data["accounts"]
