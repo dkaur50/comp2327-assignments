@@ -1,19 +1,18 @@
 __author__ = "ACE Faculty"
 __version__ = "1.0.0"
-__credits__ = ""
+__credits__ = "Divjot Kaur"
 
+from client.client import Client
+from bank_account.bank_account import BankAccount 
+from bank_account.chequing_account import ChequingAccount
+from bank_account.savings_account import SavingsAccount
+from bank_account.investment_account import InvestmentAccount
 import os
 import sys
 import csv
 from datetime import datetime
 import logging
-from bank_account.bank_account import BankAccount
-from client.client import Client
-from bank_account.chequing_account import ChequingAccount
-from bank_account.savings_account import SavingsAccount
-from bank_account.investment_account import InvestmentAccount
-
-
+ 
 # THIS LINE IS NEEDED SO THAT THE GIVEN TESTING 
 # CODE CAN RUN FROM THIS DIRECTORY.
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -113,7 +112,7 @@ def load_data() -> tuple[dict,dict]:
             elif account_type == InvestmentAccount:
                 management_fee = float(["management_fee"])
 
-                account = ChequingAccount(account_number, 
+                account = InvestmentAccount(account_number, 
                                             client_number, 
                                             balance, 
                                             date_created, 
@@ -133,6 +132,7 @@ def load_data() -> tuple[dict,dict]:
                             "convert string to float: 'ten'")
 
     # RETURN STATEMENT
+    return client_listing, accounts
 
 def update_data(updated_account: BankAccount) -> None:
     """A function to update the accounts.csv file with balance 
