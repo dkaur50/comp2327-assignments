@@ -13,6 +13,9 @@ class SavingsAccount(BankAccount):
     """This represents Savings Account that inherits from BankAccount.
     """ 
 
+    # Declaring a constant.
+    SERVICE_CHARGE_PREMIUM = 2.5
+
     def __init__(self, account_number, client_number, balance,
                  date_created, minimum_balance):
         """Initializes the attributes of the BankAccount class.
@@ -35,18 +38,15 @@ class SavingsAccount(BankAccount):
         try:
             self.__minimum_balance = float(minimum_balance)
         except ValueError:
-            self.__minimum_balance = 50.0 
-
-        self.__service_charge_strategy = MinimumBalanceStrategy(
-                                                self.__minimum_balance)
-    # Declaring a constant.
-    SERVICE_CHARGE_PREMIUM = 2.5
-
+            self.__minimum_balance = 50.0  
+ 
     def get_service_charges(self) -> float:
         """This function returns the calculated service charges."""
         
-        return self.__service_charge_strategy.calculate_service_charges(
-                                                        self.balance)
+        if self.balance >= self.__minimum_balance:
+            return BankAccount.BASE_SERVICE_CHARGE
+        
+        return BankAccount.BASE_SERVICE_CHARGE * SavingsAccount.SERVICE_CHARGE_PREMIUM
     
     def __str__(self) -> str: 
         """This represents formatted string representation."""

@@ -17,20 +17,17 @@ from bank_account.savings_account import SavingsAccount
 
 from bank_account.bank_account import BankAccount
  
-class TestSavingsAccount(unittest.TestCase):
-    
+class TestSavingsAccount(unittest.TestCase): 
     """This class represents SavingsAccount inherited from the
     BankAccount class.
     """
     
-    def setUp(self):
-        
+    def setUp(self): 
         """This function would set up a common date for all tests."""
         
         self.today = date.today()
 
-    def test_init_valid_minimum_balance(self):
-        
+    def test_init_valid_minimum_balance(self): 
         """This function tests whether the minimum balance is valid.""" 
 
         # Act
@@ -43,8 +40,7 @@ class TestSavingsAccount(unittest.TestCase):
         self.assertEqual(account.client_number, 6001)
         self.assertEqual(account.balance, 1000.0)
 
-    def test_init_invalid_minimum_balance(self):
-        
+    def test_init_invalid_minimum_balance(self): 
         """This function tests whether the minimum balance is invalid.
         """
 
@@ -55,8 +51,7 @@ class TestSavingsAccount(unittest.TestCase):
         # Assert
         self.assertEqual(account._SavingsAccount__minimum_balance, 50.0)
 
-    def test_service_charges_above_minimum(self):
-        
+    def test_service_charges_above_minimum(self): 
         """This function tests the service charges when balance is 
         above minimum balance."""
 
@@ -67,8 +62,7 @@ class TestSavingsAccount(unittest.TestCase):
         self.assertEqual(account.get_service_charges(), 
                          BankAccount.BASE_SERVICE_CHARGE)
 
-    def test_service_charges_below_minimum(self):
-        
+    def test_service_charges_below_minimum(self): 
         """This function tests the service charges when balance is 
         below minimum balance."""
 
@@ -81,8 +75,7 @@ class TestSavingsAccount(unittest.TestCase):
         # Assert
         self.assertEqual(account.get_service_charges(), expected_charge)
 
-    def test_str_representation(self):
-        
+    def test_str_representation(self): 
         """This function tests the string representation of 
         SavingsAccount."""
 

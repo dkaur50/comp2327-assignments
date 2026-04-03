@@ -11,19 +11,17 @@ from datetime import date
 
 from patterns.strategy.overdraft_strategy import OverdraftStrategy
 
-class ChequingAccount(BankAccount):
-
+class ChequingAccount(BankAccount): 
     """This class represents chequing account inherited from details 
     from BankAccount class.
     """
 
     def __init__(self, account_number, client_number, balance, 
-                 date_created, overdraft_limit, overdraft_rate):
-        
+                 date_created, overdraft_limit, overdraft_rate) -> None: 
         """This class if for initializing the attributes of the 
         BankAccount class.
 
-        Retur:
+        Returns:
             account_number (int): An integer representing the bank 
             account number.
             client_number (int): An integer representing the client 
@@ -39,42 +37,56 @@ class ChequingAccount(BankAccount):
                          date_created)
         
         try:
-            self.__overdraft_limit = float(overdraft_limit) 
-        except ValueError:
+            self.__overdraft_limit = float(overdraft_limit)
+        except (ValueError, TypeError):
             self.__overdraft_limit = -100.0
+
         try:
             self.__overdraft_rate = float(overdraft_rate)
-        except ValueError:
+        except (ValueError, TypeError):
             self.__overdraft_rate = 0.05
-
-        overdraft_limit=self.__overdraft_limit,
-        overdraft_rate=self.__overdraft_rate
+ 
         self.__service_charge_strategy = OverdraftStrategy(
                                                 self.__overdraft_limit,
                                                 self.__overdraft_rate)
 
     @property
-    def overdraft_limit(self):
-
+    def overdraft_limit(self) -> None: 
         """This function represents the overdraft limit which is a 
         float.
         """
+
         return self.__overdraft_limit
 
     @property
-    def overdraft_rate(self):
-        
+    def overdraft_rate(self) -> None: 
         """This function represents the overdraft rate which is a float.
         """
+
         return self.__overdraft_rate
 
-    def get_service_charges(self) -> float:
-        
-        """This is a function gets the charges."""
-        return self.__service_charge_strategy.calculate_service_charges(self.balance)
+    def withdraw(self, amount: float) -> None:
 
-    def __str__(self):
+        if type(amount) != float:
+            raise ValueError("Withdraw amount must be numeric.")
+
+        if amount <= 0:
+            raise ValueError("Withdraw amount must be positive.")
+
+        new_balance = self.balance - amount
+
+        if new_balance < -self.overdraft_limit:
+            raise ValueError(
+                f"Withdrawal exceeds overdraft limit.")
+
+        self._BankAccount__balance = new_balance
+
+    def get_service_charges(self) -> float:
+        """This is a function gets the charges.""" 
         
+        return self.__service_charge_strategy.calculate_service_charges(self.balance) 
+ 
+    def __str__(self): 
         """This function represents a string representation."""
         
         account_number_and_balance = super().__str__().strip()

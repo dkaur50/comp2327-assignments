@@ -25,3 +25,7 @@ The Strategy pattern has been used to define the attributes of the ServiceCharge
 ## Observer Pattern
 
 The Observer pattern has been used to create a list of all the observers and perform attach, detach and notify features on the account types and alert them with ALERT messages if needed while storing all the data in a .txt file.
+
+## Event-Driven Programming Paradigm
+
+[Explain how the Event-Driven Programming Paradigm is employed in this application.]

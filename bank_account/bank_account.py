@@ -43,8 +43,7 @@ class BankAccount(Subject, ABC):
         except (ValueError, TypeError):
             self.__balance = 0.0
         
-        if isinstance(date_created, date):
-            self.__date_created = date_created 
+        self._date_created = date_created 
 
     LOW_BALANCE_LEVEL = 50.0
     
@@ -78,7 +77,7 @@ class BankAccount(Subject, ABC):
     def date_created(self) -> date:
         
         """"""
-        return self.__date_created
+        return self._date_created
 
     def attach(self, observer):
         self._observers.append(observer)

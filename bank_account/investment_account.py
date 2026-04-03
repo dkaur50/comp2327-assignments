@@ -15,6 +15,8 @@ class InvestmentAccount(BankAccount):
     """ This represents Investment Account that inherits from 
     BankAccount.""" 
 
+    TEN_YEARS_AGO = date.today() - timedelta(days=10 * 365.25)
+
     def __init__(self, account_number, client_number, balance,
                  date_created, management_fee):
         
@@ -44,6 +46,10 @@ class InvestmentAccount(BankAccount):
         self.__service_charge_strategy = ManagementFeeStrategy(balance,
                                                         date_created,
                                                 self.__management_fee)
+    def __is_older_than_10_years(self) -> bool:
+        """Return True if the account is older than 10 years."""
+
+        return self.date_created <= InvestmentAccount.TEN_YEARS_AGO
 
     def get_service_charges(self) -> float:
         """This class is to get the service charges using the 
@@ -54,16 +60,15 @@ class InvestmentAccount(BankAccount):
         else:
             return BankAccount.BASE_SERVICE_CHARGE + self.__management_fee
         
-    def __is_older_than_10_years(self) -> bool:
-        """Return True if the account is older than 10 years."""
-        return self.date_created <= date.today() - timedelta(days=10*365.25)
-
     def __str__(self) -> str:
         """This function returns a string representation."""
 
         investment_information = super().__str__().strip()
  
-        fee_display = "Waived" if self.__is_older_than_10_years() else f"${self.__management_fee:,.2f}"
+        if self.__is_older_than_10_years():
+            fee_display = "Waived" 
+        else: 
+            fee_display = f"${self.__management_fee:,.2f}"
 
         return (f"{investment_information}\n"
             f"Date Created: {self.date_created} "
