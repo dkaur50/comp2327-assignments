@@ -9,7 +9,7 @@ from PySide6.QtWidgets import QApplication
 
 __author__ = "ACE Faculty"
 __version__ = "1.0.0"
-__credits__ = "<your name here>"
+__credits__ = "Divjot Kaur"
 
 def main() -> None:
     """The main function."""
