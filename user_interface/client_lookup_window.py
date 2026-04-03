@@ -44,7 +44,7 @@ class ClientLookupWindow(LookupWindow):
             return
     
         if client_number not in self.client_listing:
-            self.client_info_label.setText(self, f"Client number:{client_number} not found.")
+            QMessageBox.warning(self, "Not Found", f"Client number: {client_number} not found.")
             self.reset_display()
             return
             
@@ -90,9 +90,9 @@ class ClientLookupWindow(LookupWindow):
     
         user_input = self.account_table.item(row, 0)
 
-        # if item is None:
-        #     QMessageBox.warning(self, "Warning", "No account has been selected.")
-        #     return
+        if user_input is None:
+            QMessageBox.warning(self, "No Bank Account", "Bank Account selected does not exist.")
+            return
         
         account_number_of_client = user_input.text().strip()
             
