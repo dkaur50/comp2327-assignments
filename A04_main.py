@@ -3,6 +3,7 @@ program.
 """
 
 import sys
+from ui_superclasses.lookup_window import LookupWindow
 from user_interface.client_lookup_window import ClientLookupWindow
 from PySide6.QtWidgets import QApplication
 
