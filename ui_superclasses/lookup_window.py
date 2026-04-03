@@ -11,11 +11,12 @@ from PySide6.QtWidgets import QLineEdit
 from PySide6.QtWidgets import QPushButton
 from PySide6.QtWidgets import QTableWidget
 from PySide6.QtWidgets import QComboBox
+from PySide6.QtWidgets import QAbstractItemView
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 
 class LookupWindow(QMainWindow):
-    """Represents a main window for looking up BankAccounts."""    
+    """Represents a main window for looking up BankAccounts."""
 
     def __init__(self):
         """Initializes a new instance of the LookupWindow class."""
@@ -25,7 +26,7 @@ class LookupWindow(QMainWindow):
         COLUMN_HEADERS = ["Account Number", "Balance", "Date Created", "Account Type"]
 
         self.setWindowTitle("Client Lookup")
-        self.resize(600, 400) 
+        self.setFixedSize(600, 400)
 
         # Main layout
         centralWidget = QWidget(self)
@@ -70,7 +71,7 @@ class LookupWindow(QMainWindow):
         layout.addWidget(self.client_info_label, 3, 1)
 
         # Table (for BankAccount data) span all columns
-        layout.addWidget(self.account_table, 4, 0, 1, 3)  
+        layout.addWidget(self.account_table, 4, 0, 1, 3)
 
         # Add Assignment 5 Widgets
         layout.addWidget(self.filter_label, 5, 0)
@@ -78,18 +79,33 @@ class LookupWindow(QMainWindow):
         layout.addWidget(self.filter_edit, 6, 1)
         layout.addWidget(self.filter_button, 6, 2)
 
+        # Define table state
         self.account_table.setColumnCount(4)
-        self.account_table.setHorizontalHeaderLabels(COLUMN_HEADERS)                
+        self.account_table.setHorizontalHeaderLabels(COLUMN_HEADERS)
         self.account_table.horizontalHeader().setFont(bold_font)
         self.account_table.resizeColumnsToContents()
         self.account_table.resizeRowsToContents()
+        self.account_table.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.account_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        
         self.reset_display()
+
+    def keyPressEvent(self, event):
+        """Handles the key press event of the window.
+
+        Args:
+            event (QKeyEvent): Contains data about the event.
+        """
+
+        # Determine if the key that was pressed is the return/enter key
+        if event.key() == Qt.Key.Key_Return or event.key() == Qt.Key.Key_Enter:
+            self.lookup_button.click()
 
     def reset_display(self) -> None:
         """Resets the display.
 
-        Resets the contents of display fields client_number_edit, 
-        client_info_label and account_table, and sets focus to the 
+        Resets the contents of display fields client_number_edit,
+        client_info_label and account_table, and sets focus to the
         client_number_edit.
         """
 
@@ -103,4 +119,4 @@ class LookupWindow(QMainWindow):
         self.filter_edit.setEnabled(False)
         self.filter_button.setEnabled(False)
         self.filter_label.setEnabled(False)
-   
+        self.client_number_edit.setFocus()

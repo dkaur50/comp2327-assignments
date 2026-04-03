@@ -21,8 +21,9 @@ class DetailsWindow(QDialog):
 
         # Design window.
         super().__init__()
+
         self.setWindowTitle("Transaction Processor")
-        self.resize(200, 200)
+        self.setFixedSize(280, 200)
 
         layout = QGridLayout(self)
         layout.setAlignment(Qt.AlignTop)  

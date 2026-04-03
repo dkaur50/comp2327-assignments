@@ -23,7 +23,9 @@ class ClientLookupWindow(LookupWindow):
 
         super().__init__()
 
-        self.load_data()
+        # Calling out the load_data method.
+        self.client_listing, self.accounts = self.load_data()
 
-        self.client_listing = self.data["client"]
-        self.accounts = self.data["accounts"]
+        self.lookup_button.clicked.connect(self.on_lookup_client)
+        self.client_number_edit.textChanged.connect(self.on_text_changed)
+        self.account_table.cellClicked.connect(self.__on_select_account)
