@@ -12,7 +12,6 @@ from user_interface.manage_data import update_data
 from bank_account.bank_account import BankAccount
 from client.client import Client
 
-
 __author__ = "ACE Faculty"
 __version__ = "1.0.0"
 __credits__ = "<your name here>"

@@ -1,3 +1,9 @@
+"""This module is related to the data of the accounts.csv and the 
+clients.csv. Through this module, the codes would help the data to be 
+loaded using the load_data function and updated using the update_data 
+function.
+"""
+
 __author__ = "ACE Faculty"
 __version__ = "1.0.0"
 __credits__ = "Divjot Kaur" 
@@ -66,13 +72,20 @@ def load_data() -> tuple[dict,dict]:
     with open(clients_csv_path, newline='') as file:
         reader = csv.DictReader(file)
 
+        # Looping through each record in the reader object as per the 
+        # assignment requirements.
         for record in reader:
+            
+            # Storing the data and converting the data to appropriate 
+            # data types to meet the class specifications.
             try:
                 client_number = int(record["client_number"])
                 first_name = record["first_name"]
                 last_name = record["last_name"]
                 email_address = record["email_address"]
 
+                # Adding the Client object to the client_listing 
+                # dictionary.
                 client = Client(client_number, first_name, last_name, 
                                 email_address)
                 
@@ -85,7 +98,12 @@ def load_data() -> tuple[dict,dict]:
     with open(accounts_csv_path, newline='') as file:
         reader = csv.DictReader(file)  
 
+        # For this also, looping through each record in the reader 
+        # object as per the assignment requirements.
         for record in reader:
+            
+            # Storing the data and converting the data to appropriate 
+            # data types to meet the class specifications.
             try:
                 account_number = int(record["account_number"])
                 client_number = int(record["client_number"])
@@ -93,6 +111,8 @@ def load_data() -> tuple[dict,dict]:
                 date_created = record["date_created"]
                 account_type = record["account_type"]
 
+                # Associating appropriate data values to each account 
+                # type objects.
                 if account_type == "ChequingAccount":
                     if record["overdraft_limit"] != "Null":
                        overdraft_limit = float(record["overdraft_limit"])             
@@ -139,7 +159,7 @@ def load_data() -> tuple[dict,dict]:
             except Exception as error:
                 logging.error(f"Unable to create Bank account: {error}")
 
-    # RETURN STATEMENT
+    # RETURN STATEMENT 
     return client_listing, accounts
 
 def update_data(updated_account: BankAccount) -> None:
@@ -191,3 +211,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    
