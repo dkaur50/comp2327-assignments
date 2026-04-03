@@ -14,6 +14,8 @@ class AccountDetailsWindow(DetailsWindow):
     perform bank account transactions.
     """
 
+    balance_updated = Signal(object)
+
     def __init__(self, account: BankAccount) -> None:
         """Initializes a new instance of the AccountDetailsWindow class.
         
@@ -25,11 +27,13 @@ class AccountDetailsWindow(DetailsWindow):
 
         if isinstance(account, BankAccount):
 
-            self.account = BankAccount(account.account_number,
-                                        account.client_number,
-                                        account.balance,
-                                        account.date_created)
+            # self.account = BankAccount(account.account_number,
+            #                             account.client_number,
+            #                             account.balance,
+            #                             account.date_created)
 
+            self.account = account
+            
             # set labels
             self.account_number_label.setText(str(self.account.account_number))
             self.balance_label.setText(f"${self.account.balance:,.2f}")
@@ -41,7 +45,7 @@ class AccountDetailsWindow(DetailsWindow):
 
         else:
             raise TypeError("Invalid type of Bank Account.")
-        
+
     def on_apply_transaction(self):
         try:
             amount = float(self.transaction_amount_edit.text())
@@ -61,17 +65,16 @@ class AccountDetailsWindow(DetailsWindow):
                 transaction_type = "Withdraw"
                 self.account.withdraw(amount)
 
+
             self.balance_label.setText(f"${self.account.balance:,.2f}")
-            self.transaction_amount_edit.clear()
-            self.transaction_amount_edit.setFocus()
+
+            self.balance_updated.emit(self.account)
         
         except Exception as error:
-                QMessageBox.warning(self, "(transaction_type) Failed",
-                    f"{transaction_type} has been failed."
-                )
-                self.transaction_amount_edit.clear()
-                self.transaction_amount_edit.setFocus()
-    
+                QMessageBox.warning(self, f"{transaction_type} Failed",
+                    f"{transaction_type} has been failed: {(error)}")
+
     def on_exit(self):
         self.close()
+    
     

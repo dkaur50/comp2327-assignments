@@ -85,6 +85,19 @@ class ClientLookupWindow(LookupWindow):
     def on_text_changed(self):
         self.account_table.setRowCount(0)
 
+    def update_data(self, account: BankAccount):
+
+        for row in range(self.account_table.rowCount()):
+
+            if int(self.account_table.item(row, 0).text()) == account.account_number:
+                
+                balance_item = QTableWidgetItem(f"${account.balance:,.2f}")
+                balance_item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+
+                self.account_table.setItem(row, 1, balance_item)
+
+        self.accounts[account.account_number] = account
+
     @Slot(int, int)
     def __on_select_account(self, row: int, column: int) -> None:
     
@@ -109,5 +122,5 @@ class ClientLookupWindow(LookupWindow):
         account = self.accounts[account_number]
 
         dialog = AccountDetailsWindow(account)
+        dialog.balance_updated.connect(self.update_data) 
         dialog.exec()
-        
