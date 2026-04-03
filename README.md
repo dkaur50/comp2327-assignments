@@ -28,4 +28,4 @@ The Observer pattern has been used to create a list of all the observers and per
 
 ## Event-Driven Programming Paradigm
 
-[Explain how the Event-Driven Programming Paradigm is employed in this application.]
+In this project, I used codes related to the Event Driven Programming Paradigm whereby I was managing Event Handling, Signals and dialog boxes which were possible with the help of the PySide6 package. I began with the load_data function and then update_data through which I was able to interact with the client data and their bank account information present in the csv files provided. Further,  I developed codes that would enable a user to look up for their account using their client number and can perform features liek any deposit and withdrawal. A little crucial part was how the balance would be updated after any transaction, but after giving it time and understanding the notes, I was able to make it work. The last thing was the signal management that allowed each part of codes from different functions to work together as an when a transaction or any task is being done.
