@@ -7,11 +7,11 @@ from bank_account.bank_account import BankAccount
 
 __author__ = "ACE Faculty"
 __version__ = "1.0.0"
-__credits__ = "<your name here>"
+__credits__ = "Divjot Kaur"
 
 class AccountDetailsWindow(DetailsWindow):
     """Represents a detail window used to display account details and 
-    perform bank account transactions.
+    perform bank account transactions.gave
     """
 
     balance_updated = Signal(object)
@@ -25,29 +25,32 @@ class AccountDetailsWindow(DetailsWindow):
 
         super().__init__()
 
-        if isinstance(account, BankAccount):
-
-            # self.account = BankAccount(account.account_number,
-            #                             account.client_number,
-            #                             account.balance,
-            #                             account.date_created)
+        if isinstance(account, BankAccount): 
 
             self.account = account
             
-            # set labels
+            # Setting labels.
             self.account_number_label.setText(str(self.account.account_number))
             self.balance_label.setText(f"${self.account.balance:,.2f}")
 
-            # connect buttons
+            # Establishing connections.
             self.deposit_button.clicked.connect(self.on_apply_transaction)
             self.withdraw_button.clicked.connect(self.on_apply_transaction)
             self.exit_button.clicked.connect(self.on_exit)
 
         else:
+            # This happens when the account parameter is not of any 
+            # BankAccount type.
             raise TypeError("Invalid type of Bank Account.")
 
     def on_apply_transaction(self):
+        """This funtion acts as a slot methord for the deposit_button 
+        and the withdraw_button clicked signals.
+        """
+        
         try:
+            # Below is the code to convert the amount entered into the 
+            # transaction_amount_edit widget to float. 
             amount = float(self.transaction_amount_edit.text())
         except ValueError:
             QMessageBox.warning(self, "Invalid Data", "Amount must be numeric.")
@@ -57,14 +60,18 @@ class AccountDetailsWindow(DetailsWindow):
         try:
             sender = self.sender()
 
+            # This is when the sender is the deposit_button.
             if sender == self.deposit_button:
                 transaction_type = "Deposit"
                 self.account.deposit(amount)
 
+            # This is when the sender is the withdraw button.
             elif sender == self.withdraw_button:
                 transaction_type = "Withdraw"
                 self.account.withdraw(amount)
-
+ 
+            # Below codes are to update the balance_label widget with the 
+            # updated balance value of the account attribute.
 
             self.balance_label.setText(f"${self.account.balance:,.2f}")
 
@@ -75,6 +82,9 @@ class AccountDetailsWindow(DetailsWindow):
                     f"{transaction_type} has been failed: {(error)}")
 
     def on_exit(self):
+        """This function acts as a slot for the exit_button clicked 
+        signal.
+        """
+        
         self.close()
-    
-    
+     
