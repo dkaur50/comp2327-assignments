@@ -13,7 +13,7 @@ class MinimumBalanceStrategy(ServiceChargeStrategy):
     """
 
     # Declaring the constant.
-    SERVICE_CHARGE_PREMIUM = 2.0
+    SERVICE_CHARGE_PREMIUM = 2.5
 
     def __init__(self, minimum_balance):
         """This function is for initializing the attributes of 
@@ -21,7 +21,7 @@ class MinimumBalanceStrategy(ServiceChargeStrategy):
 
         self._minimum_balance = minimum_balance
 
-    def calculate_service_charges(self, balance) -> float:
+    def calculate_service_charges(self, balance: float) -> float:
         """This class calculates service charges.
 
         Returns:
@@ -32,5 +32,5 @@ class MinimumBalanceStrategy(ServiceChargeStrategy):
         if balance >= self._minimum_balance:
             return ServiceChargeStrategy.BASE_SERVICE_CHARGE
 
-        return ServiceChargeStrategy.BASE_SERVICE_CHARGE * MinimumBalanceStrategy.SERVICE_CHARGE_PREMIUM
+        return ServiceChargeStrategy.BASE_SERVICE_CHARGE * self.SERVICE_CHARGE_PREMIUM
      

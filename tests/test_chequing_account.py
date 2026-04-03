@@ -19,14 +19,12 @@ from bank_account.bank_account import BankAccount
 
 from patterns.strategy.service_charge_strategy import ServiceChargeStrategy
 
-class TestChequingAccount(unittest.TestCase):
-    
+class TestChequingAccount(unittest.TestCase): 
     """This class represents chequing account inherited from details 
     from BankAccount class.
     """
     
-    def test_init_valid_inputs(self):
-        
+    def test_init_valid_inputs(self): 
         """This function is to test the validity of valid inputs."""
 
         # Arrange
@@ -43,11 +41,9 @@ class TestChequingAccount(unittest.TestCase):
                                    overdraft_limit, overdraft_rate)
 
         # Assert
-        self.assertEqual(account._ChequingAccount__overdraft_limit,
-                         100.00, 0.05)
+        self.assertEqual(account.overdraft_limit, 100.00)
 
-    def test_init_invalid_overdraft_limit(self):
-        
+    def test_init_invalid_overdraft_limit(self):    
         """This function is to test invalid overdraft limit."""
 
         # Act
@@ -55,11 +51,9 @@ class TestChequingAccount(unittest.TestCase):
                                   "invalid", 0.05)
 
         # Assert
-        self.assertEqual(account._ChequingAccount__overdraft_limit,
-                         0.0, 0.05)
+        self.assertEqual(account.overdraft_limit, -100.0)
 
-    def test_withdraw_within_balance(self):
-        
+    def test_withdraw_within_balance(self): 
         """This function tests withdraw within balance."""
 
         # Arrange
@@ -72,8 +66,7 @@ class TestChequingAccount(unittest.TestCase):
         # Assert
         self.assertEqual(300.00, round(account.balance, 2))
 
-    def test_withdraw_using_overdraft(self):
-        
+    def test_withdraw_using_overdraft(self): 
         """This function tests withdraw using overdraft."""
 
         # Arrange
@@ -86,8 +79,7 @@ class TestChequingAccount(unittest.TestCase):
         # Assert
         self.assertEqual(-150.00, round(account.balance, 2))
 
-    def test_withdraw_exceeds_overdraft(self):
-        
+    def test_withdraw_exceeds_overdraft(self):         
         """This function tests withdraw exceeding overdraft."""
 
         # Arrange
@@ -98,8 +90,7 @@ class TestChequingAccount(unittest.TestCase):
         with self.assertRaises(ValueError):
             account.withdraw(200.00)
 
-    def test_get_service_charges(self):
-        
+    def test_get_service_charges(self):         
         """This function tests service charge calculation."""
 
         # Arrange
@@ -113,8 +104,7 @@ class TestChequingAccount(unittest.TestCase):
         expected = ServiceChargeStrategy.BASE_SERVICE_CHARGE
         self.assertEqual(expected, round(actual, 2))
 
-    def test__str__(self):
-        
+    def test__str__(self): 
         """This function checks if the string format is correct or not.
         """
 

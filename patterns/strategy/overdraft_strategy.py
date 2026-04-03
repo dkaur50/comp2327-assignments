@@ -33,9 +33,8 @@ class OverdraftStrategy(ServiceChargeStrategy):
         """
                 
         if balance >= self._overdraft_limit:
-            return ServiceChargeStrategy.BASE_SERVICE_CHARGE
-        else:
-            return ServiceChargeStrategy.BASE_SERVICE_CHARGE + \
-                   (self._overdraft_limit-balance)*self._overdraft_rate
+            return ServiceChargeStrategy.BASE_SERVICE_CHARGE 
         
+        return (ServiceChargeStrategy.BASE_SERVICE_CHARGE + \
+                   (self._overdraft_limit-balance)*self._overdraft_rate)
         
